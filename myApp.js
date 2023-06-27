@@ -36,9 +36,13 @@ const timeHandler = (req, res) => {
 
 app.get('/now', currentTime, timeHandler)
 
+const echoPath = "/:word/echo"
 
+const echoHandler = (req, res) => {
+  res.json({"echo": req.params.word})
+}
 
-
+app.get(echoPath, echoHandler)
 
 
 
