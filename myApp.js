@@ -45,16 +45,19 @@ const echoHandler = (req, res) => {
 app.get(echoPath, echoHandler)
 
 const namePath = "/name"
-const nameHandler = (req, res) => {
+const nameGetHandler = (req, res) => {
   res.json({"name": `${req.query.first} ${req.query.last}`})
 }
 
 const encodedDataHandler = bodyParser.urlencoded({extended: false})
 app.use(encodedDataHandler)
 
+const namePostHandler = (req, res) => {
+  res.json({"name": `${req.body.first} ${req.body.last}`})
+}
 // app.get(namePath, nameHandler)
 // This syntax allows to chain different verb handlers on the same path route.
-app.route(namePath).get(nameHandler).post(nameHandler)
+app.route(namePath).get(nameGetHandler).post(namePostHandler)
 
 
 
