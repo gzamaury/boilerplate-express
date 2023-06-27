@@ -1,4 +1,5 @@
 require('dotenv').config()
+let bodyParser = require('body-parser')
 let express = require('express');
 let app = express();
 const indexPath = __dirname + '/views/index.html'
@@ -36,13 +37,27 @@ const timeHandler = (req, res) => {
 
 app.get('/now', currentTime, timeHandler)
 
+const echoPath = "/:word/echo"
+const echoHandler = (req, res) => {
+  res.json({"echo": req.params.word})
+}
 
+app.get(echoPath, echoHandler)
 
+const namePath = "/name"
+const nameGetHandler = (req, res) => {
+  res.json({"name": `${req.query.first} ${req.query.last}`})
+}
 
+const encodedDataHandler = bodyParser.urlencoded({extended: false})
+app.use(encodedDataHandler)
 
-
-
-
+const namePostHandler = (req, res) => {
+  res.json({"name": `${req.body.first} ${req.body.last}`})
+}
+// app.get(namePath, nameHandler)
+// This syntax allows to chain different verb handlers on the same path route.
+app.route(namePath).get(nameGetHandler).post(namePostHandler)
 
 
 
