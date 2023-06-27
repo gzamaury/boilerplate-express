@@ -7,6 +7,13 @@ const middAssets = express.static(assetsPath)
 
 console.log("Hello World")
 
+const simpleLogger = (req, res, next) => {
+  console.log(`${req.method} ${req.path} - ${req.ip}`)
+  next()
+}
+
+app.use(simpleLogger)
+
 app.get('/', (req, res) => res.sendFile(indexPath))
 app.use('/public', middAssets)
 
