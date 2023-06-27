@@ -25,9 +25,16 @@ const jsonHandler = (req, res) => {
 
 app.get('/json',  jsonHandler)
 
+const currentTime = (req, res, next) => {
+  req.time = new Date().toString()
+  
+  next()
+}
+const timeHandler = (req, res) => {
+  res.json({"time": req.time})
+}
 
-
-
+app.get('/now', currentTime, timeHandler)
 
 
 
