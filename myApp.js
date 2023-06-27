@@ -9,7 +9,13 @@ console.log("Hello World")
 app.get('/', (req, res) => res.sendFile(indexPath))
 app.use('/public', middAssets)
 
-app.get('/json', (req, res) => res.json({"message": "Hello json"}) )
+const jsonHandler = (req, res) => {
+  let helloMess = process.env.MESSAGE_STYLE == 'uppercase' ? 'HELLO JSON' : 'Hello json'
+  
+  return res.json({"message": helloMess})
+}
+
+app.get('/json',  jsonHandler)
 
 
 
